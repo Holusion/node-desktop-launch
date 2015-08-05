@@ -19,5 +19,16 @@ describe("utils - EntryList",function () {
       done(e);
     });
   });
-  
+  describe("find",function(){
+    it("mime type",function(done){
+      var list = new EntryList();
+      list.find("image/x-foo").then(function(found){
+        expect(found.length).to.equal(1);
+        done();
+      }).catch(function(e){
+        done(e);
+      })
+    });
+  })
+
 });
