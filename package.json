@@ -2,6 +2,7 @@
   "name": "desktop-launch",
   "version": "0.0.1",
   "main": "lib/index.js",
+  "repository":"https://github.com/Holusion/node-desktop-launch",
   "scripts": {
     "test": "mocha"
   },
