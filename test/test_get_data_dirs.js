@@ -1,17 +1,19 @@
 var path = require("path");
-describe("utils - getDataDirs()",function () {
-  var getDataDirs;
+describe("utils - getXdgDirs()",function () {
+  var getXdgDirs;
   before(function(){
-    getDataDirs = require("../lib/utils/getDataDirs");
+    getXdgDirs = require("../lib/utils/getXdgDirs");
   })
-  it("returns content of $XDG_DATA_DIRS & $HOME/.local/share",function(){
-    var dirs = getDataDirs();
-    expect(dirs.length).to.equal(2);
-    expect(dirs[1]).to.equal(path.join(__dirname,"fixtures"));
-  });
-  it("cat path with first parameter",function(){
-    var dirs = getDataDirs("toto");
-    expect(dirs.length).to.equal(2);
-    expect(dirs[1]).to.equal(path.join(__dirname,"fixtures/toto"));
+  describe("dataDirs",function(){
+    it("returns content of $XDG_DATA_DIRS & $HOME/.local/share",function(){
+      var dirs = getXdgDirs("dataDirs");
+      expect(dirs.length).to.equal(2);
+      expect(dirs[1]).to.equal(path.join(__dirname,"fixtures"));
+    });
+    it("cat path with first parameter",function(){
+      var dirs = getXdgDirs("dataDirs","toto");
+      expect(dirs.length).to.equal(2);
+      expect(dirs[1]).to.equal(path.join(__dirname,"fixtures/toto"));
+    });
   });
 });
