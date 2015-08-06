@@ -19,16 +19,34 @@ describe("EntryList",function () {
       done(e);
     });
   });
+  it("getExecKey",function(done){
+    var list = new EntryList();
+    list.getExecKey("test.desktop").then(function(found){
+      expect(found).to.equal("fooview %F");
+      done();
+    }).catch(function(e){
+      done(e);
+    });
+  });
   describe("find",function(){
     it("mime type",function(done){
       var list = new EntryList();
       list.find("image/x-foo").then(function(found){
-        expect(typeof found["test.desktop"]).to.equal("object");
+        expect(typeof found).to.equal("string");
+        expect(found).to.equal("fooview %F");
+        done();
+      }).catch(function(e){
+        done(e);
+      });
+    });
+    it("resolve when not found",function(done){
+      var list = new EntryList();
+      list.find("application/binary").then(function(found){
         done();
       }).catch(function(e){
         done(e);
       })
     });
-  })
+  });
 
 });

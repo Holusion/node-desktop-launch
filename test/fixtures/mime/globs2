@@ -3,3 +3,5 @@
 50:video/mp4:*.f4v
 50:text/x-c++src:*.C:cs
 50:text/x-csrc:*.c:cs
+50:text/plain:*.txt
+50:image/x-foo:*.foo
