@@ -10,7 +10,6 @@ describe("EntryList",function () {
     var list = new EntryList();
     list.entries.then(function(entries){
       expect(typeof entries).to.equal("object");
-      console.log("entries:",entries);
       expect(typeof entries['test.desktop']).to.equal("object");
       expect(typeof entries['test.desktop']['Desktop Entry']).to.equal("object");
       expect(       entries['test.desktop']['Desktop Entry']["Exec"]).to.equal("fooview %F");

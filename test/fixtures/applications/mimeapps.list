@@ -1,2 +1,5 @@
 [Added Associations]
 application/bar=foo;
+
+[Default Applications]
+application/baz=foobar;

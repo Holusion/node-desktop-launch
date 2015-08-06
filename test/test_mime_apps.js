@@ -10,7 +10,8 @@ describe("MimeApps",function () {
     var list = new MimeApps();
     list.apps.then(function(apps){
       expect(typeof apps).to.equal("object");
-      console.log(apps);
+      expect(apps).to.not.have.property("application/bar");
+      expect(apps).to.have.property("application/baz","foobar");
       done();
     }).catch(function(e){
       console.log("error :",e);
