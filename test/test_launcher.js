@@ -40,8 +40,13 @@ describe("Launcher",function(){
     beforeEach(function(){
       this.launcher = new Launcher();
     });
-    it("parse commands",function(){
+    it("parse app launchers",function(){
       this.launcher.exec("1","sleep %F");
+      expect(this.launcher.child).to.be.not.null;
+      expect(process.kill(this.launcher.child.pid),0).to.be.true;
+    });
+    it("parse binary file execution",function(){
+      this.launcher.exec(__dirname+"/fixtures/stubFile.sh");
       expect(this.launcher.child).to.be.not.null;
       expect(process.kill(this.launcher.child.pid),0).to.be.true;
     });
