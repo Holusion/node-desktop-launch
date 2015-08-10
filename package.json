@@ -1,6 +1,6 @@
 {
   "name": "desktop-launch",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "lib/index.js",
   "repository": "https://github.com/Holusion/node-desktop-launch",
   "scripts": {
