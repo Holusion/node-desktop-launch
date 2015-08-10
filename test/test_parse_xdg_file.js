@@ -11,6 +11,15 @@ describe("parseXdgFile",function(){
       done();
     });
   });
+  it("parse localized desktop entry",function(done){
+    fs.readFile(path.join(__dirname,"fixtures/applications/vlc.desktop"),function(err,data){
+      expect(err).to.be.null;
+      var conf = parseXdgFile(data);
+      expect(typeof conf["Desktop Entry"]).to.equal("object");
+      expect(conf["Desktop Entry"]["Exec"]).to.equal("/usr/bin/vlc --started-from-file %U");
+      done();
+    });
+  });
   it("parse app association entry",function(done){
     fs.readFile(path.join(__dirname,"fixtures/applications/mimeapps.list"),function(err,data){
       expect(err).to.be.null;

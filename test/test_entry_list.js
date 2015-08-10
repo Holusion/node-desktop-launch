@@ -6,13 +6,15 @@ describe("EntryList",function () {
     EntryList = require("../lib/EntryList");
   })
 
-  it("parses desktop entries",function(done){
+  it("parses desktop entries (localized or not)",function(done){
     var list = new EntryList();
     list.entries.then(function(entries){
       expect(typeof entries).to.equal("object");
       expect(typeof entries['test.desktop']).to.equal("object");
       expect(typeof entries['test.desktop']['Desktop Entry']).to.equal("object");
       expect(       entries['test.desktop']['Desktop Entry']["Exec"]).to.equal("fooview %f");
+      expect(typeof entries['vlc.desktop']).to.equal("object");
+      expect(       entries['vlc.desktop']['Desktop Entry']["Exec"]).to.equal("/usr/bin/vlc --started-from-file %U");
       done();
     }).catch(function(e){
       console.log("error :",e);
