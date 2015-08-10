@@ -12,7 +12,7 @@ describe("EntryList",function () {
       expect(typeof entries).to.equal("object");
       expect(typeof entries['test.desktop']).to.equal("object");
       expect(typeof entries['test.desktop']['Desktop Entry']).to.equal("object");
-      expect(       entries['test.desktop']['Desktop Entry']["Exec"]).to.equal("fooview %F");
+      expect(       entries['test.desktop']['Desktop Entry']["Exec"]).to.equal("fooview %f");
       done();
     }).catch(function(e){
       console.log("error :",e);
@@ -22,7 +22,7 @@ describe("EntryList",function () {
   it("getExecKey",function(done){
     var list = new EntryList();
     list.getExecKey("test.desktop").then(function(found){
-      expect(found).to.equal("fooview %F");
+      expect(found).to.equal("fooview %f");
       done();
     }).catch(function(e){
       done(e);
@@ -33,7 +33,7 @@ describe("EntryList",function () {
       var list = new EntryList();
       list.find("image/x-foo").then(function(found){
         expect(typeof found).to.equal("string");
-        expect(found).to.equal("fooview %F");
+        expect(found).to.equal("fooview %f");
         done();
       }).catch(function(e){
         done(e);

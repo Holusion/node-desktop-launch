@@ -7,7 +7,7 @@ describe("parseXdgFile",function(){
       expect(err).to.be.null;
       var conf = parseXdgFile(data);
       expect(typeof conf["Desktop Entry"]).to.equal("object");
-      expect(conf["Desktop Entry"]["Exec"]).to.equal("fooview %F");
+      expect(conf["Desktop Entry"]["Exec"]).to.equal("fooview %f");
       done();
     });
   });

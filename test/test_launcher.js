@@ -8,7 +8,7 @@ describe("Launcher",function(){
     it("simple",function(done){
       this.launcher.exec = function(command,entry){
         expect(command).to.equal("/path/to/file.txt");
-        expect(entry).to.equal("fooview %F");
+        expect(entry).to.equal("fooview %f");
         done();
       }
       this.launcher.start("/path/to/file.txt").catch(function(e){
@@ -28,7 +28,7 @@ describe("Launcher",function(){
     it("known format without autolaunch",function(done){
       this.launcher.exec = function(command,entry){
         expect(command).to.equal("/path/to/file.foo");
-        expect(entry).to.equal("fooview %F");
+        expect(entry).to.equal("fooview %f");
         done();
       }
       this.launcher.start("/path/to/file.foo").catch(function(e){
@@ -41,7 +41,7 @@ describe("Launcher",function(){
       this.launcher = new Launcher();
     });
     it("parse app launchers",function(){
-      this.launcher.exec("1","sleep %F");
+      this.launcher.exec("1","sleep %f");
       expect(this.launcher.child).to.be.not.null;
       expect(process.kill(this.launcher.child.pid),0).to.be.true;
     });
