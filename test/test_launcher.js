@@ -51,4 +51,20 @@ describe("Launcher",function(){
       expect(process.kill(this.launcher.child.pid),0).to.be.true;
     });
   });
+  describe(".killChild",function(){
+    beforeEach(function(){
+      this.launcher = new Launcher();
+    });
+    it("sleep",function(done){
+      this.launcher.exec("10","sleep %f");
+      expect(this.launcher.child).to.be.not.null;
+      this.launcher.on("end",function(file){
+        expect(file).to.equal("10");
+        done();
+      });
+      this.launcher.killChild();
+
+    });
+
+  });
 })
