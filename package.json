@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha"
   },
+  "keywords":["xdg","Mime","freedesktop","app","default","launcher","desktop"],
   "dependencies": {
     "xdg-basedir": "^2.0.0"
   },
