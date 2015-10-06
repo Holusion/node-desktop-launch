@@ -12,6 +12,31 @@ parse the Exec key of desktop entry files to launch a program opening the target
 A convenience ```launcher.killChild()``` method is provided. The launcher class is designed to launch exactly one child at a time and will kill any remaining process on subsequent ```launcher.start("file")``` calls.
 It's safe to call ```launcher.killChild()``` without knowing if the child_process is still alive.
 
+### API
+
+#### High Level
+
+Only 2 methods should generally be used :
+
+    launcher.start("filepath"); //To start a file using default associated app
+    launcher.killChild(); //To force kill the child_process.
+
+#### Low Level
+
+Once can access member classes to provide it's own API:
+
+    launcher.types.find("file"); //get a file's MIME type
+    launcher.apps.find("type"); //Get a MIME type's default apps as an array
+    launcher.entries.find("type"); //get a MIME type's most prioritized app that declare it can open it.
+
+Those calls are using Promises and can be chained like :
+
+    launcher.types.find("file")
+      .then(launcher.apps.find)
+      .then(function(apps){
+        //An array of default apps.
+      });
+
 ### To Do
 
 - test coverage is not too bad but lacks diversity on fixtures. It would do no harm to test on a wider variety of examples
