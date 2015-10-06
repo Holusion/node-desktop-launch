@@ -1,12 +1,20 @@
 {
   "name": "desktop-launch",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "lib/index.js",
   "repository": "https://github.com/Holusion/node-desktop-launch",
   "scripts": {
     "test": "mocha"
   },
-  "keywords":["xdg","Mime","freedesktop","app","default","launcher","desktop"],
+  "keywords": [
+    "xdg",
+    "Mime",
+    "freedesktop",
+    "app",
+    "default",
+    "launcher",
+    "desktop"
+  ],
   "dependencies": {
     "xdg-basedir": "^2.0.0"
   },
