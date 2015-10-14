@@ -16,7 +16,7 @@
     "desktop"
   ],
   "dependencies": {
-    "xdg-basedir": "^2.0.0"
+    "xdg-apps": "^0.0.2"
   },
   "devDependencies": {
     "chai": "^3.2.0",
