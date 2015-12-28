@@ -26,19 +26,11 @@ Only 2 methods should generally be used :
 
 #### Low Level
 
-Once can access member classes to provide it's own API:
+Once can access member class *Finder* to provide it's own API:
 
-    launcher.types.find("file"); //get a file's MIME type
-    launcher.apps.find("type"); //Get a MIME type's default apps as an array
-    launcher.entries.find("type"); //get a MIME type's most prioritized app that declare it can open it.
+    launcher.finder
 
-Those calls are using Promises and can be chained like :
-
-    launcher.types.find("file")
-      .then(launcher.apps.find)
-      .then(function(apps){
-        //An array of default apps.
-      });
+It's behaviour is documented in the [xdg-aps](https://www.npmjs.com/package/xdg-apps) module
 
 ### To Do
 
