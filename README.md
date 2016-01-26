@@ -2,7 +2,7 @@
 Open files using freedesktop's Desktop Entry and Shared-MIME specifications
 
 [![Build Status](https://travis-ci.org/Holusion/node-desktop-launch.svg?branch=master)](https://travis-ci.org/Holusion/node-desktop-launch)
-
+[![Test Coverage](https://codeclimate.com/github/Holusion/node-desktop-launch/badges/coverage.svg)](https://codeclimate.com/github/Holusion/node-desktop-launch/coverage)
 
 parse the Exec key of desktop entry files to launch a program opening the target file.
 
