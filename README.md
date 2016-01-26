@@ -19,10 +19,20 @@ It's safe to call ```launcher.killChild()``` without knowing if the child_proces
 
 #### High Level
 
+##### Methods
 Only 2 methods should generally be used :
 
     launcher.start("filepath"); //To start a file using default associated app
     launcher.killChild(); //To force kill the child_process.
+
+##### Examples
+
+```javascript
+//You can give it a binary file :
+launcher.start("/usr/bin/chromium") //open chromium with no args
+//or a well known mimetype :
+launcher.start("/path/to/index.html") //open your default browser at index.html
+```
 
 #### Low Level
 
@@ -30,30 +40,12 @@ Once can access member class *Finder* to provide it's own API:
 
     launcher.finder
 
-It's behaviour is documented in the [xdg-aps](https://www.npmjs.com/package/xdg-apps) module
+It's behaviour is documented in the [xdg-aps](https://www.npmjs.com/package/xdg-apps) module. It's where most of the logic is.
 
 ### To Do
 
-- test coverage is not too bad but lacks diversity on fixtures. It would do no harm to test on a wider variety of examples
-- totally décorelate testing from system (still check $HOME dir's entries)
-- Use dbus launch when available
-- test priority over multiple competing entries
+- Use dbus launch when available. I don't want to have dbus as a requirement though.
 
 ### How it works
 
-First the program will determine the file's MIME type via the ```mime/globs2``` file. No libmagic support is available yet. Then it will match it against registered default applications and (if necessary) registered capable applications.
-
-If an app is found capable of opening the file it will be launched as specified by the app entry's **Exec** key.
-
-Internally, it uses [xdg-basedirs](https://github.com/sindresorhus/xdg-basedir) to know where it should search. Then it opens up all available files specified in freedesktop's [mime-app-spec](http://standards.freedesktop.org/mime-apps-spec/latest/ar01s02.html) that are not desktop specific.
-
-**Namely :**
-
-- $XDG_CONFIG_HOME/mimeapps.list	user overrides *(recommended location for user configuration GUIs)*
-- $XDG_CONFIG_DIRS/mimeapps.list	*sysadmin and ISV overrides*
-- $XDG_DATA_HOME/applications/mimeapps.list	*for compatibility, deprecated*
-- $XDG_DATA_DIRS/applications/mimeapps.list	*distribution-provided defaults*
-
-The [MimeApps](https://github.com/Holusion/node-desktop-launch/blob/master/lib/MimeApps.js) class takes care of creating a prioritized list of apps associated with mime types.
-
-If no default app is found, [EntryList](https://github.com/Holusion/node-desktop-launch/blob/master/lib/EntryList.js) will return any app associated with this Mime Type.
+The [xdg-aps](https://www.npmjs.com/package/xdg-apps) module yields a default opener for the given file. We build a command line from it's `Exec` informations and execute it. This module also provides (really simple) hypervisor functions, doing it's best to manage spawned processes.
