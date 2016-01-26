@@ -5,3 +5,12 @@ node_js:
   - "4.0"
   - "0.12"
 
+install:
+  - npm install
+  - npm install -g istanbul codeclimate-test-reporter
+script: istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec
+addons:
+  code_climate:
+    repo_token: f7ac595a649faf65306c0eb694d875d8dea65e0ac644f07bb7e7599945098448
+after_script:
+  - codeclimate-test-reporter < coverage/lcov.info
