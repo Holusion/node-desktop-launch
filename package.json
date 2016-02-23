@@ -1,6 +1,6 @@
 {
   "name": "desktop-launch",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "main": "lib/index.js",
   "repository": "https://github.com/Holusion/node-desktop-launch",
   "scripts": {
@@ -22,5 +22,5 @@
     "chai": "^3.2.0",
     "mocha": "^2.2.5"
   },
-  "license":"MIT"
+  "license": "MIT"
 }
