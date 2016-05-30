@@ -25,6 +25,17 @@ Only 2 methods should generally be used :
     launcher.start("filepath"); //To start a file using default associated app
     launcher.killChild(); //To force kill the child_process.
 
+##### Events
+the launcher will emit a few events in it's lifecycle. They are used internally and you can listen to them to know what's happening.
+
+###### end
+
+When the child process is closed. equivalent to `spawn()` **exit** event. It is not emitted when the child is killed with `killChild()` or by starting another child process to prevent race conditions : an end event dispatched **after** a new child is requested will lead the requester to think his child is terminated.
+
+###### error
+
+Transmit child process's errors.
+
 ##### Examples
 
 ```javascript
