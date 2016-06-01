@@ -36,34 +36,4 @@ describe("Launcher",function(){
       });
     });
   });
-  describe(".exec",function(){
-    beforeEach(function(){
-      this.launcher = new Launcher();
-    });
-    it("parse app launchers",function(){
-      this.launcher.exec("1","sleep %f");
-      expect(this.launcher.child).to.be.not.null;
-      expect(process.kill(this.launcher.child.pid),0).to.be.true;
-    });
-    it("parse binary file execution",function(){
-      this.launcher.exec(__dirname+"/fixtures/stubFile.sh");
-      expect(this.launcher.child).to.be.not.null;
-      expect(process.kill(this.launcher.child.pid),0).to.be.true;
-    });
-  });
-  describe("does not \"end\" when child is replaced",function(){
-    beforeEach(function(){
-      this.launcher = new Launcher();
-    });
-    it("sleep",function(done){
-      var self = this;
-      this.launcher.on("end",function(file){
-        done(); //Will fail if calles twice
-      });
-      this.launcher.exec("10","sleep %f");
-      setTimeout(function(){
-        self.launcher.exec("0.01","sleep %f");
-      },5)
-    });
-  });
 })
