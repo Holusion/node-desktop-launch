@@ -24,5 +24,8 @@ describe("makeCommandLine",function(){
     it("spaces",function(){
       expect(make("test with spaces","foo %F")).to.deep.equal({exec:"foo",params: ["test with spaces"]});
     });
+    it("keep pre-defined args",function(){
+      expect(make("file.txt","foo --bar %F")).to.deep.equal({exec:"foo",params: ["--bar", "file.txt"]});
+    });
   })
 });
