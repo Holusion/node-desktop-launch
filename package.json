@@ -16,6 +16,7 @@
     "desktop"
   ],
   "dependencies": {
+    "dbus-native": "^0.2.3",
     "xdg-apps": "^0.1.0"
   },
   "devDependencies": {
