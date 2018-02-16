@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "dbus-native": "^0.2.3",
-    "xdg-apps": "^0.1.0"
+    "xdg-apps": "xdg-apps@beta"
   },
   "devDependencies": {
     "chai": "^3.2.0",
