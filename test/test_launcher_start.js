@@ -36,14 +36,14 @@ describe("Launcher",function(){
       });
     });
 
-    it("dbus not exec", function(done) {
+    it("dbus not exec", async function() {
       this.launcher.exec = function(command, entry) {
-        done(new Error("exec called but should not"));
+        return new Error("exec called but should not")
       }
-      this.launcher.start("/path/to/file.bar").catch(function(e) {
-        done(e);
+      await this.launcher.start("/path/to/file.bar").catch(function(e) {
+        return e;
       })
-      setTimeout(function() {done()}, 1000);
+      expect(this.launcher.id).to.equal("dbus");
     })
   });
 })
