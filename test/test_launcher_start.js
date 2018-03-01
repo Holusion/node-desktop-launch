@@ -40,9 +40,7 @@ describe("Launcher",function(){
       this.launcher.exec = function(command, entry) {
         return new Error("exec called but should not")
       }
-      await this.launcher.start("/path/to/file.bar").catch(function(e) {
-        return e;
-      })
+      await this.launcher.start("/path/to/file.bar")
       expect(this.launcher.id).to.equal("dbus");
     })
   });
