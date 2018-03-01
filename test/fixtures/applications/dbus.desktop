@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=DbusBar
+TryExec=bar
+Exec=bar %f
+MimeType=application/x-bar
+DBusActivatable=true

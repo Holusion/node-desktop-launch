@@ -35,5 +35,15 @@ describe("Launcher",function(){
         done(e);
       });
     });
+
+    it("dbus not exec", function(done) {
+      this.launcher.exec = function(command, entry) {
+        done(new Error("exec called but should not"));
+      }
+      this.launcher.start("/path/to/file.bar").catch(function(e) {
+        done(e);
+      })
+      setTimeout(function() {done()}, 1000);
+    })
   });
 })

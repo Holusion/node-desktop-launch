@@ -5,3 +5,4 @@
 50:text/x-csrc:*.c:cs
 50:text/plain:*.txt
 50:image/x-foo:*.foo
+50:application/x-bar:*.bar
