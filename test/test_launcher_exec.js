@@ -1,3 +1,5 @@
+'use strict';
+const path = require("path");
 var Launcher = require("../lib");
 var ExecMock = require("./ExecMock");
 
@@ -7,14 +9,14 @@ describe("Launcher.exec()",function(){
       this.launcher = new Launcher();
     });
     it("parse app launchers",function(){
-      this.launcher.exec("1","sleep %f");
-      expect(this.launcher.child).to.be.not.null;
-      expect(process.kill(this.launcher.child.pid),0).to.be.true;
+      let child = this.launcher.exec("1","sleep %f");
+      expect(child).to.be.not.null;
+      expect(process.kill(child.pid),0).to.be.true;
     });
     it("parse binary file execution",function(){
-      this.launcher.exec(__dirname+"/fixtures/stubFile.sh");
-      expect(this.launcher.child).to.be.not.null;
-      expect(process.kill(this.launcher.child.pid),0).to.be.true;
+      let child = this.launcher.exec(path.resolve(__dirname,"..","fixtures/stubFile.sh"));
+      expect(child).to.be.not.null;
+      expect(process.kill(child.pid),0).to.be.true;
     });
     it("takes spawn options from 3rd arg",function(done){
       this.launcher._spawn = function(command,args,options){
@@ -30,7 +32,7 @@ describe("Launcher.exec()",function(){
     beforeEach(function(){
       this.launcher = new Launcher();
     });
-    it("sleep",function(done){
+    it("sleep", function(done){
       var self = this;
       this.launcher.on("end",function(file){
         done(); //Will fail if calles twice
@@ -50,7 +52,7 @@ describe("Launcher.exec()",function(){
       }
     });
     it("Pipe child.stdout and child.stderr",function(done){
-      msgs = 0;
+      let msgs = 0;
       this.launcher.on("stdout",function(l){
         expect(l).to.equal("hello");
         msgs++;

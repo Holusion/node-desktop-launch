@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.foobar
+Exec=echo ../../dbus_app.js
