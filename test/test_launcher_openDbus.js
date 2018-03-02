@@ -79,8 +79,12 @@ describe("Laucher.openDbus always die", function() {
     this.launcher = new Launcher();
   })
 
+  afterEach(() => {
+    this.launcher.removeAllListeners('end');
+  })
+
   it("wait for end", (done) => {
-    this.launcher.once("end",()=>{
+    this.launcher.on("end",()=>{
       setTimeout(done, 2000)
     })
     this.launcher.openDbus("/path/to/file.bar","com.foo.desktop");
