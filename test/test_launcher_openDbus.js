@@ -1,14 +1,10 @@
 'use strict';
 var Launcher = require("../lib");
-const {promisify} = require("util");
 
 const dbus = require("dbus-native");
 const serviceName = "com.foo";
 const interfaceName = 'org.freedesktop.Application';
 const objectPath = `/${serviceName.replace(/\./g,'/')}`;
-
-
-const wait = promisify(setTimeout);
 
 
 describe("Launcher.openDbus()",function(){
@@ -52,8 +48,9 @@ describe("Launcher.openDbus()",function(){
       }
     });
   })
-  it("Return a comprehensive error for unknown services", false, function(){
-    //FIXME
+  it("Return a comprehensive error for unknown services", async function(){
+    let launcher = new Launcher();
+    return await launcher.openDbus("/path/to/file.truc", "com.truc.desktop").should.be.rejectedWith("Failed to request interface 'org.freedesktop.Application' at '/com/truc' : The name com.truc was not provided by any .service files");
   })
   it("wait for end", function(done) {
     let launcher = new Launcher();
