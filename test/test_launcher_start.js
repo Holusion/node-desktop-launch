@@ -1,7 +1,4 @@
 var Launcher = require("../lib");
-const {promisify} = require("util");
-
-const wait = promisify(setTimeout);
 
 describe("Launcher",function(){
   describe(".start()",function(){
@@ -39,14 +36,5 @@ describe("Launcher",function(){
         done(e);
       });
     });
-    /*
-    it("dbus not exec", async function() {
-      this.launcher.exec = function(command, entry) {
-        throw new Error("exec called but should not")
-      }
-      expect(await this.launcher.start("/path/to/file.bar")).to.not.throw;
-      expect(this.launcher.child_service_id).to.equal("com.dbus");
-    })
-    */
   });
 })
