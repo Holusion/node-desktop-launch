@@ -6,7 +6,8 @@ install:
   - npm install
   - npm install -g nyc codeclimate-test-reporter
 script:
-  - dbus-launch --sh-syntax --exit-with-session "nyc ./node_modules/mocha/bin/_mocha"
+  - eval $(dbus-launch --sh-syntax --exit-with-session)
+  - "nyc ./node_modules/mocha/bin/_mocha"
 addons:
   code_climate:
     repo_token: f7ac595a649faf65306c0eb694d875d8dea65e0ac644f07bb7e7599945098448
