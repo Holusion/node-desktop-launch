@@ -94,7 +94,6 @@ describe("Laucher.openDbus always die", function() {
   it("end message emit one time at each app ends", (done) => {
     this.timeout(10000);
     dbus_app(() => {})
-    let launcher = new Launcher();
     let call = 0;
     this.launcher.on("end", () => {
       call++;
