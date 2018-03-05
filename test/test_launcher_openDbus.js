@@ -58,11 +58,11 @@ describe("Launcher.openDbus() never die",function(){
     dbus_app(done);
   });
 
-  // after(function(done) {
-  //   sessionBus.releaseName(serviceName,function(err){console.log("Released name",err)})
-  //   sessionBus.connection.end();
-  //   done();
-  // })
+  after(function(done) {
+    sessionBus.releaseName(serviceName,function(err){console.log("Released name",err)})
+    // sessionBus.connection.end();
+    done();
+  })
 
   it("Return a comprehensive error for unknown services", async function(){
     let launcher = new Launcher();
@@ -84,6 +84,7 @@ describe("Laucher.openDbus always die", function() {
   })
 
   it("wait for end", (done) => {
+    dbus_app(() => {});
     this.launcher.on("end",()=>{
       setTimeout(done, 2000)
     })
