@@ -56,18 +56,38 @@ describe("Launcher.openDbus() never die",function(){
   this.timeout(4000);
   before(function(done){
     dbus_app(done);
+    this.launcher = new Launcher();
   });
 
   after(function(done) {
     sessionBus.releaseName(serviceName,function(err){console.log("Released name",err)})
     // sessionBus.connection.end();
     done();
-  })
+  });
 
-  it("Return a comprehensive error for unknown services", async function(){
-    let launcher = new Launcher();
-    await launcher.openDbus("/path/to/file.truc", "com.truc.desktop").should.be.rejectedWith("Failed to request interface 'org.freedesktop.Application' at '/com/truc' : The name com.truc was not provided by any .service files");
-    launcher.emit("end");
+  [
+    ["Return a comprehensive error for unknown services", "/path/to/file.truc", "com.truc.desktop", "Failed to request interface 'org.freedesktop.Application' at '/com/truc' : The name com.truc was not provided by any .service files"]
+  ].forEach((fix) => {
+    it(fix[0], async function(){
+      await this.launcher.openDbus(fix[1], fix[2]).should.be.rejectedWith(fix[3]);
+      this.launcher.emit("end");
+    })
+  });
+
+  [
+    ["Return a comprehensive error for null id", "/path/to/file.bar", null, "Invalid id when trying to call open dbus: null"],
+    ["Return a comprehensive error for invalid id", "/path/to/file.bar", "com.foo", "Invalid id when trying to call open dbus: com.foo"]
+  ].forEach((fix) => {
+    it(fix[0], function(done){
+      this.launcher.once("error", (e) => {
+        expect(e).to.equal(fix[3]);
+      });
+
+      this.launcher.once("end", () => {
+        done();
+      })
+      this.launcher.openDbus(fix[1], fix[2]);
+    })
   })
 
 });
