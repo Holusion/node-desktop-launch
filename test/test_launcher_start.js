@@ -1,40 +1,31 @@
-var Launcher = require("../lib");
+const {Launcher} = require("../lib");
 
-describe("Launcher",function(){
-  describe(".start()",function(){
-    beforeEach(function(){
-      this.launcher = new Launcher();
-
-    });
-    it("simple",function(done){
-      this.launcher.exec = function(command,entry){
-        expect(command).to.equal("/path/to/file.txt");
-        expect(entry).to.equal("fooview %f");
-        done();
-      }
-      this.launcher.start("/path/to/file.txt").catch(function(e){
-        done(e);
-      });
-    });
-    it("binary",function(done){
-      this.launcher.exec = function(command,entry){
-        expect(command).to.equal("/path/to/file");
-        expect(entry).to.be.null;
-        done();
-      }
-      this.launcher.start("/path/to/file").catch(function(e){
-        done(e);
-      });
-    });
-    it("known format without autolaunch",function(done){
-      this.launcher.exec = function(command,entry){
-        expect(command).to.equal("/path/to/file.foo");
-        expect(entry).to.equal("fooview %f");
-        done();
-      }
-      this.launcher.start("/path/to/file.foo").catch(function(e){
-        done(e);
-      });
-    });
+describe("Launcher.start()",function(){
+  const launcher = new Launcher();
+  before(function(){
+    launcher.exec = function(){};
+  });
+  it("open with desktop handler",function(){
+    return launcher.start("/path/to/file.txt")
+    .then(res=>{
+      expect(res.had_child).to.be.false;
+      expect(res.had_dbus).to.be.false;
+      expect(res.is_open).to.be.true;
+      expect(res.entry).to.have.property("Exec", "foo %f");
+    })
+  });
+  it("open as binary",function(){
+    return launcher.start("/path/to/file")
+    .then(res=>{
+      expect(res.is_open).to.be.false;
+      expect(res.entry).to.be.null;
+    })
+  });
+  it("open URI schemes",function(){
+    return launcher.start("bar:///path/to/file")
+    .then(res=>{
+      expect(res.is_open).to.be.true;
+      expect(res.entry).to.have.property("Exec", "bar %U");
+    })
   });
 })

@@ -1,0 +1,11 @@
+[Desktop Entry]
+#example file from http://standards.freedesktop.org/desktop-entry-spec/latest/apa.html
+Version=1.0
+Type=Application
+Name=Foo Viewer
+Comment=The best viewer for Foo objects available!
+TryExec=foo
+Exec=foo %f
+Icon=foo
+MimeType=image/x-foo;text/plain;
+

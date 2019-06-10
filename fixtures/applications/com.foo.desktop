@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=DbusBar
-TryExec=node ../dbus_app.js
-Exec=node ../dbus_app.js %f
-MimeType=application/x-bar
-DBusActivatable=true

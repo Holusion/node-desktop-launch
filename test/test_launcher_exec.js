@@ -1,6 +1,6 @@
 'use strict';
 const path = require("path");
-var Launcher = require("../lib");
+const {Launcher} = require("../lib");
 var ExecMock = require("./ExecMock");
 
 describe("Launcher.exec()",function(){
@@ -14,9 +14,8 @@ describe("Launcher.exec()",function(){
       expect(process.kill(child.pid),0).to.be.true;
     });
     it("parse binary file execution",function(){
-      let child = this.launcher.exec(path.resolve(__dirname,"..","fixtures/stubFile.sh"));
+      let child = this.launcher.exec(path.resolve(__dirname,"fixtures/stubFile.sh"));
       expect(child).to.be.not.null;
-      expect(process.kill(child.pid),0).to.be.true;
     });
     it("takes spawn options from 3rd arg",function(done){
       this.launcher._spawn = function(command,args,options){
@@ -28,21 +27,7 @@ describe("Launcher.exec()",function(){
     });
   });
 
-  describe("Does not \"end\" when child is replaced",function(){
-    beforeEach(function(){
-      this.launcher = new Launcher();
-    });
-    it("sleep", function(done){
-      var self = this;
-      this.launcher.on("end",function(file){
-        done(); //Will fail if calles twice
-      });
-      this.launcher.exec("10","sleep %f");
-      setTimeout(function(){
-        self.launcher.exec("0.01","sleep %f");
-      },5)
-    });
-  });
+
 
   describe("parse and setup",function(){
     beforeEach(function(){

@@ -4,7 +4,7 @@ const chai = require('chai')
     , path = require("path");
 chai.config.includeStack = true;
 
-process.env["XDG_DATA_DIRS"] = path.resolve(__dirname,"..","fixtures");
+process.env["XDG_DATA_DIRS"] = path.resolve(__dirname,"fixtures");
 
 
 //server.start(server.app);

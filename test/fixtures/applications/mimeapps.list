@@ -1,0 +1,6 @@
+[Added Associations]
+application/bar=bar;
+text/plain=test.desktop
+
+[Default Applications]
+text/plain=foo.desktop
