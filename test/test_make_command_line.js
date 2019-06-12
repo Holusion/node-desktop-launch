@@ -9,21 +9,25 @@ describe("makeCommandLine",function(){
     })
     it("array of absolute file paths",function(){
       expect(make(["/path/to/file", "/path/to/file2"], "foo %F")).to.deep.equal({exec:"foo", params:["/path/to/file", "/path/to/file2"]});
-
     })
+    
     it("relative path to URL",function(){
       expect(make("path/to/file", "foo %u")).to.deep.equal({exec:"foo", params:["file:///path/to/file"]});
     })
     it("absolute path to URL",function(){
       expect(make("/path/to/file", "foo %u")).to.deep.equal({exec:"foo", params:["file:///path/to/file"]});
     })
+    it("array of paths to URLs",function(){
+      expect(make("/path/to/file", "foo %U")).to.deep.equal({exec:"foo", params:["file:///path/to/file"]});
+      expect(make(["/path/to/file", "/path/to/file2"], "foo %U")).to.deep.equal({exec:"foo", params:["file:///path/to/file", "file:///path/to/file2"]});
+    })
+
     it("URL with custom protocol", function(){
       expect(make("foo:///path/to/file", "foo %u")).to.deep.equal({exec:"foo", params:["foo:///path/to/file"]})
     })
     it("URL with custom protocol and hostname", function(){
       expect(make("http://holusion.com/path/to/file", "foo %u")).to.deep.equal({exec:"foo", params:["http://holusion.com/path/to/file"]})
     })
-
   })
   describe("escape args",function(){
     it("keep spaces in args",function(){
