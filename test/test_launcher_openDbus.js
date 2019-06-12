@@ -3,55 +3,79 @@ const {Launcher, ErrNotFound} = require("../lib"),
       {promisify} = require("util");
 
 const dbus = require("dbus-native");
-const sessionBus = dbus.sessionBus();
 const wait = promisify(setTimeout);
 
 
-function dbus_app({
-  serviceName, 
-  interfaceName = 'org.freedesktop.Application',
-  open_callback=function(){}
-}, done=function(){} ) {
-  expect(sessionBus).to.be.ok;
-
-  const objectPath = `/${serviceName.replace(/\./g,'/')}`;
-  sessionBus.requestName(serviceName, 0x4, (err, retCode) => {
-    expect(err).to.be.null;
-    expect(retCode).to.equal(1);
-    //console.log(`Successfully requested service name "${serviceName}"!`);
-    const ifaceDesc = {
-      name: interfaceName,
-      methods: {
-        Open: ['asa{sv}', '', ['files', 'options'], []]
-      }
-    }
-    const iface = {
-      Open: open_callback
-    }
-    sessionBus.exportInterface(iface, objectPath, ifaceDesc);
-    done();
-    //console.log("Interface exposed to DBus, ready to receive function calls");
-  });
-}
 
 describe("Launcher.openDbus()",function(){
-  this.timeout(10000);
-  this.slow(3000);
+  this.timeout(3000);
+  this.slow(2000);
 
-  describe("resolve names",function(){
+  // Don't forget to end the connection in after() hook
+  const sessionBus = dbus.sessionBus();
+
+  function dbus_app({
+    serviceName, 
+    interfaceName = 'org.freedesktop.Application',
+    open_callback=function(){}
+  }, done=function(){} ) {
+  
+    
+    expect(sessionBus).to.be.ok;
+  
+    const objectPath = `/${serviceName.replace(/\./g,'/')}`;
+    sessionBus.requestName(serviceName, 0x4, (err, retCode) => {
+      expect(err).to.be.null;
+      expect(retCode).to.equal(1);
+      //console.log(`Successfully requested service name "${serviceName}"!`);
+      const ifaceDesc = {
+        name: interfaceName,
+        methods: {
+          Open: ['asa{sv}', '', ['files', 'options'], []]
+        }
+      }
+      const iface = {
+        Open: open_callback
+      }
+      sessionBus.exportInterface(iface, objectPath, ifaceDesc);
+      done();
+      console.log("Interface exposed to DBus, ready to receive function calls");
+    });
+    return function(cb=function(){}){
+      sessionBus.releaseName(serviceName,cb)
+    }
+  }
+
+  after(function(){
+    sessionBus.connection.end();
+  })
+  
+  describe("connects to dbus",function(){
     const serviceName = "com.foo"
-    const launcher = new Launcher();
+    let launcher;
+    let close_bus;
     before(function(done){
-      dbus_app({serviceName}, done);
+      launcher = new Launcher();
+      close_bus = dbus_app({serviceName}, done);
     });
   
-    after(function(done) {
-      sessionBus.releaseName(serviceName,done)
-      // sessionBus.connection.end();
+    after(function() {
+      close_bus();
+      launcher.close();
     });
     it("Find service if it exists",function(){
       return expect(launcher.openDbus("/path/to/file.bar", serviceName+".desktop")).to.eventually.be.fulfilled;
     })
+  })
+  describe("resolve names",function(){
+    const serviceName = "com.foo"
+    let launcher;
+    before(function(){
+      launcher = new Launcher();
+    });
+    after(function() {
+      launcher.close();
+    });
     it("Throw an error for unknown services", function(){
       //"Error: /com/truc not found : The name com.truc was not provided by any .service files"
       return expect(launcher.openDbus("/path/to/file.bar", "com.truc.desktop")).to.be.rejectedWith(ErrNotFound, /name com.truc was not provided by any \.service files/);
@@ -67,7 +91,7 @@ describe("Launcher.openDbus()",function(){
   it("emit end when service drops out", (done) => {
     const local_name = "com.local.bar";
     const launcher = new Launcher();
-    dbus_app({
+    const close_bus = dbus_app({
       serviceName: local_name,
       open_callback: function(){
         sessionBus.releaseName(local_name,function(err){
@@ -76,6 +100,7 @@ describe("Launcher.openDbus()",function(){
       }
     });
     launcher.on("end",function(){
+      launcher.close();
       done();
     });
     launcher.openDbus("/path/to/file.bar","com.local.bar.desktop");

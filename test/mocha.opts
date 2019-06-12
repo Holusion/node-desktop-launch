@@ -4,3 +4,5 @@
 --recursive
 --colors
 -R spec
+--check-leaks
+--require ./test/async-dump.js

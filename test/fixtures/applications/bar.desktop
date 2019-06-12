@@ -7,5 +7,5 @@ Comment=The best viewer for Bar objects available!
 TryExec=bar
 Exec=bar %U
 Icon=bar
-MimeType=image/x-bar;text/plain;x-scheme-handler/bar
-
+MimeType=application/x-bar;text/plain;x-scheme-handler/bar;
+DBusActivatable=true

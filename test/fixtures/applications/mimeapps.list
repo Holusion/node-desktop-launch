@@ -1,5 +1,5 @@
 [Added Associations]
-application/bar=bar;
+application/bar=bar.desktop;
 text/plain=test.desktop
 
 [Default Applications]

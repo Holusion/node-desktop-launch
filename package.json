@@ -17,8 +17,8 @@
   ],
   "dependencies": {
     "abstract-socket": "^2.0.0",
-    "dbus-native": "0.2.3",
-    "xdg-apps": "^1.0.1"
+    "dbus-native": "0.4.0",
+    "xdg-apps": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^3.2.0",
