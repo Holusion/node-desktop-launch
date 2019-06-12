@@ -53,6 +53,17 @@ describe("Launcher",function(){
       }
       launcher.start("foo:///path/to/file")
     });
+    it("open URI schemes with dbus",function(done){
+      launcher.exec = function(){
+        done(new Error("Exec should not be called in this case"));
+      }
+      launcher.openDbus = function(file, id){
+        expect(file).to.equal("bar:///path/to/file");
+        expect(id).to.equal("bar.desktop");
+        done();
+      }
+      launcher.start("bar:///path/to/file")
+    });
   })
 
   describe("exec()",function(){
