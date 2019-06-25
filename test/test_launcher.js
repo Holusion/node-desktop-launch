@@ -25,7 +25,14 @@ describe("Launcher",function(){
       }
       launcher.start("/path/to/file.txt")
     });
-    
+    it("supports paths with special characters",function(done){
+      launcher.exec = function(file, line, opts){
+        expect(file).to.equal("/path/t o/file$.txt");
+        expect(line).to.equal("foo %f");
+        done();
+      }
+      launcher.start("/path/t o/file$.txt")
+    });
     it("open as binary",function(done){
       launcher.exec = function(file, line, opts){
         expect(file).to.equal("/path/to/file");
@@ -102,6 +109,16 @@ describe("Launcher",function(){
           return new ExecMock([command,args,options]);
         }
         launcher.exec("1","sleep %f",{env:{NODE_ENV:"development"}});
+      });
+      it("parse arguments",function(done){
+        launcher._spawn = function(command,args,options){
+          expect(command).to.equal("foo")
+          expect(args[0]).to.equal("/path/to something.txt");
+          expect(args).to.have.property("length", 1);
+          done();
+          return new ExecMock([command,args,options]);
+        }
+        launcher.exec("/path/to something.txt","foo %f");
       });
     });
     describe("Spawn and kill childs",function(){
